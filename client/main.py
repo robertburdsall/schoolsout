@@ -6,6 +6,7 @@ class App(App):
     def build(self):
         return App()
 
+# test
 
 if __name__ == '__main__':
     App().run()
