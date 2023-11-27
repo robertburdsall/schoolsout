@@ -1,12 +1,12 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
+from kivy.uix.label import Label
 
 
-class App(App):
+class yourapp(App):
     def build(self):
-        return App()
+        root_widget = Label(text="Hello world!")
+        return root_widget
 
-# test
 
-if __name__ == '__main__':
-    App().run()
+yourapp().run()
