@@ -9,10 +9,12 @@ class YourApp(App):
     def build(self):
         layout = BoxLayout(orientation='vertical')
         b1 = Button(text='button 1')
-        b2 = Button(text='button 2')
+        b2 = Button (text='button 2')
+        b3 = Button(text='button 3')
 
         layout.add_widget(b1)
         layout.add_widget(b2)
+        layout.add_widget(b3)
 
         return layout
 
