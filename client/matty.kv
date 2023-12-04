@@ -1,0 +1,31 @@
+<Matty>
+    canvas.before:
+        Color:
+            rgba: 1, 1, 0, 0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	BoxLayout:
+		id: box
+		size_hint_y: .55
+		pos_hint:{"center_x":.5,"center_y":.5}
+    BoxLayout:
+		size_hint_y: .2
+		Slider:
+			id: waittime
+			value_track: True
+			value_track_color: [1, 0, 0, 1]
+			min: 0
+			max: 20
+			value: 0
+		Button:
+			text: "Submit!"
+			size_hint_y: .5
+			size_hint_x: .5
+	BoxLayout:
+	    size_hint_y: 1.75
+		Label:
+		    text: "The current wait is: [color=#ADD8E6][u]7[/u][/color] Minutes!"
+		    font_size: 50
+		    markup: True
+		    background_color: 1, 0, 0, 1
