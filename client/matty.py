@@ -1,6 +1,10 @@
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.slider import Slider
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from kivy.uix.button import Button
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
 import numpy as np
@@ -28,13 +32,16 @@ FitImage:
 source: "background_cropped.jpg"
 """
 
-class Matty(FloatLayout):
+class Matty(FloatLayout):   
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         box = self.ids.box
         box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
-
+    
+    def slide_it(self, *args):
+        self.slide_text.text = f"Enter a Wait Time: {str(int(args[1]))} mins"
+        self.slide_text.font_size = 30
 
 class MainApp(MDApp):
     def build(self):
