@@ -1,13 +1,10 @@
 <Matty>
-	
 	slide_text: slider_label
     canvas.before:
-        Color:
-            rgba: 1, 1, 0, 0
         Rectangle:
             pos: self.pos
             size: self.size
-
+            source: 'background.jpg'
 	BoxLayout:
 		id: box
 		size_hint_y: .55
@@ -15,37 +12,37 @@
 
     BoxLayout:
 		size_hint_y: .2
-		orientation: "vertical" 
+		orientation: "vertical"
 		size: root.width, root.height
 
-		Label: 
-			id: slider_label 
-			text: "Enter a Wait Time: XX mins"
-			font_name: "Times New Roman" 
-			font_size: 30 
+		Label:
+			id: slider_label
+			text: "Enter a Wait Time: 0 mins"
+			font_size: 30
+			color: 1, 1, 1, 1
 
 		Slider:
 			id: waittime
 			value_track: True
-			value_track_color: [1, 0, 0, 1]
+			value_track_color: [.2, .6, 1, 1]
 			min: 1
-			max: 50
+			max: 25
 			step: 1
 			orientation: "horizontal"
 			on_value: root.slide_it(*args)
-		
+
 		Button:
 			text: "Submit!"
-			font_name: "Times New Roman" 
 			pos_hint:{"center_x":.5,"center_y":.5}
 			on_press: app.pressed(self)
+			background_color: .2, .6, 1, .8
 
 
 	BoxLayout:
 	    size_hint_y: 1.75
+	    orientation: "vertical"
 		Label:
 		    text: "The current wait is: [color=#ADD8E6][u]7[/u][/color] Minutes!"
 		    font_size: 50
-			font_name: "Times New Roman" 
 		    markup: True
-		    background_color: 1, 0, 0, 1
+		    background_color: 1, 1, 1, 1
