@@ -11,21 +11,23 @@ import numpy as np
 import json
 import requests
 
-# create 1000 equally spaced points between -10 and 10
-x = np.linspace(-10, 10, 1000)
-
-# calculate the y value for each element of the x vector
-y = -x ** 2 + 2 * x + 2
-
-fig, ax = plt.subplots()
-ax.plot(x, y)
-
-plt.plot(x, y)
-plt.ylabel("Wait time")
-plt.xlabel("Minutes")
-
 
 class Matty(FloatLayout):
+
+
+    # create 1000 equally spaced points between -10 and 10
+    x = np.linspace(0, 10, 1000)
+
+    # calculate the y value for each element of the x vector
+    y = x ** 2 + 2 * x + 2
+
+    fig, ax = plt.subplots()
+    line, = ax.plot(x, y)
+
+    plt.plot(x, y)
+    plt.ylabel("Wait time")
+    plt.xlabel("Minutes")
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -33,13 +35,27 @@ class Matty(FloatLayout):
         box = self.ids.box
         box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
 
+    def update_plot(self, slider_value):
+        # Update y values based on the slider value
+        y_vals = -self.x ** 2 + 2 * self.x + slider_value
+
+        # Update the plot data
+        self.line.set_ydata(y_vals)
+
+        # Redraw the plot
+        self.fig.canvas.draw()
+
     # work on color set
     def slide_it(self, *args):
-        self.slide_text.text = f"Enter a wait time: [color=#ADD8E6][u]{str(int(args[1]))}[/u][/color] mins"
+        slider_value = args[1]
+        self.slide_text.text = f"Enter a wait time: {str(int(args[1]))} mins"
         self.slide_text.font_size = 30
 
         # get this to work - color needs to change
         self.slide_text.text_color = 1, 0, 0, 1
+        self.update_plot(slider_value)
+
+        return args[1]
 
 
 class MainApp(MDApp):
@@ -53,6 +69,8 @@ class MainApp(MDApp):
 
     def pressed(self, instance):
         print("Pressed!")
+
+
 
     # URL of the Flask server
     flask_server_url = 'http://127.0.0.1:5000/receive_data'
@@ -77,4 +95,3 @@ class MainApp(MDApp):
 """
 
 MainApp().run()
-
