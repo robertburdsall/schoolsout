@@ -8,6 +8,8 @@ from kivy.uix.button import Button
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
 import numpy as np
+import json
+import requests
 
 # create 1000 equally spaced points between -10 and 10
 x = np.linspace(-10, 10, 1000)
@@ -20,28 +22,24 @@ ax.plot(x, y)
 
 plt.plot(x, y)
 plt.ylabel("Wait time")
-plt.xlabel("Time")
+plt.xlabel("Minutes")
 
 
-# add this to add background image
-"""
-MDScreen:
-md_bg_color: 239 / 255, 239 / 255, 239 / 255, 1
-name: "entrance"
-FitImage:
-source: "background_cropped.jpg"
-"""
-
-class Matty(FloatLayout):   
+class Matty(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        # work on matplotlib background being transparent
         box = self.ids.box
         box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
-    
+
+    # work on color set
     def slide_it(self, *args):
-        self.slide_text.text = f"Enter a Wait Time: {str(int(args[1]))} mins"
+        self.slide_text.text = f"Enter a wait time: [color=#ADD8E6][u]{str(int(args[1]))}[/u][/color] mins"
         self.slide_text.font_size = 30
+
+        # get this to work - color needs to change
+        self.slide_text.text_color = 1, 0, 0, 1
 
 
 class MainApp(MDApp):
@@ -52,9 +50,31 @@ class MainApp(MDApp):
         Builder.load_file('matty.kv')
 
         return Matty()
-    
-    def pressed(self, instance): 
-        print("Pressed!") 
 
+    def pressed(self, instance):
+        print("Pressed!")
+
+    # URL of the Flask server
+    flask_server_url = 'http://127.0.0.1:5000/receive_data'
+
+    # Data to be sent as JSON
+    data_to_send = {'key': 'value', 'another_key': 'another_value'}
+
+    # Package data as JSON
+    json_data = json.dumps(data_to_send)
+
+    # Set headers for the request
+    headers = {'Content-Type': 'application/json'}
+
+
+# work done after class will make the connection work!
+"""
+    # Send POST request to Flask server
+    response = requests.post(flask_server_url, data=json_data, headers=headers)
+
+    # Print the response from the server
+    print(response.json())
+"""
 
 MainApp().run()
+
