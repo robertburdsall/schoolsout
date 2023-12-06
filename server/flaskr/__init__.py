@@ -1,34 +1,30 @@
-import os
+from flask import Flask, request, jsonify
 
-from flask import Flask
+app = Flask(__name__)
 
 
-def create_app(test_config=None):
-    # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-    )
+# Route to handle a GET request
+@app.route('/get_data', methods=['GET'])
+def get_data():
+    return jsonify({'message': 'This is a GET request'})
 
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
 
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
+# Route to handle a POST request
+@app.route('/post_data', methods=['POST'])
+def post_data():
+    data = request.json  # Assuming JSON data in the request body
+    return jsonify({'message': 'This is a POST request', 'data': data})
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
 
-# does not work yet - setup is required
+# Route to handle both GET and POST requests
+@app.route('/get_post_data', methods=['GET', 'POST'])
+def get_post_data():
+    if request.method == 'GET':
+        return jsonify({'message': 'This is a GET request'})
+    elif request.method == 'POST':
+        data = request.json  # Assuming JSON data in the request body
+        return jsonify({'message': 'This is a POST request', 'data': data})
 
-    return app
+
+if __name__ == '__main__':
+    app.run(debug=True)
