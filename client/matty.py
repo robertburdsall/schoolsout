@@ -43,8 +43,6 @@ class Matty(FloatLayout):
         self.slide_text.text = f"Enter a Wait Time: {str(int(args[1]))} mins"
         self.slide_text.font_size = 30
 
- 
-
 
 class MainApp(MDApp):
     def build(self):
@@ -56,7 +54,7 @@ class MainApp(MDApp):
         return Matty()
     
     def pressed(self, instance): 
-        print("Pressed!")
+        print("Pressed!") 
 
 
 MainApp().run()
