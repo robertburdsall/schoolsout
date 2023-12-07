@@ -14,7 +14,6 @@ import requests
 
 class Matty(FloatLayout):
 
-
     # create 1000 equally spaced points between -10 and 10
     x = np.linspace(0, 10, 1000)
 
@@ -28,12 +27,16 @@ class Matty(FloatLayout):
     plt.ylabel("Wait time")
     plt.xlabel("Minutes")
 
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         # work on matplotlib background being transparent
         box = self.ids.box
         box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+
+        self.wait_time_label = self.ids.wait_time_label
+
 
     def update_plot(self, slider_value):
         # Update y values based on the slider value
@@ -56,6 +59,14 @@ class Matty(FloatLayout):
         self.update_plot(slider_value)
 
         return args[1]
+    
+    def submit_pressed(self, instance):
+        # Get the slider value
+        slider_value = self.ids.waittime.value
+
+        # Update the text of the wait time label
+        self.wait_time_label.text = f"The current wait is: [color=#ADD8E6][u]{int(slider_value)}[/u][/color] Minutes!"
+
 
 
 class MainApp(MDApp):
@@ -66,9 +77,6 @@ class MainApp(MDApp):
         Builder.load_file('matty.kv')
 
         return Matty()
-
-    def pressed(self, instance):
-        print("Pressed!")
 
 
 

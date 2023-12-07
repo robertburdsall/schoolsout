@@ -1,48 +1,48 @@
 <Matty>
-	slide_text: slider_label
+    slide_text: slider_label
     canvas.before:
         Rectangle:
             pos: self.pos
             size: self.size
             source: 'background.jpg'
-	BoxLayout:
-		id: box
-		size_hint_y: .55
-		pos_hint:{"center_x":.5,"center_y":.5}
+    BoxLayout:
+        id: box
+        size_hint_y: .55
+        pos_hint:{"center_x":.5,"center_y":.5}
 
     BoxLayout:
-		size_hint_y: .2
-		orientation: "vertical"
-		size: root.width, root.height
+        size_hint_y: .2
+        orientation: "vertical"
+        size: root.width, root.height
 
-		Label:
-			id: slider_label
-			text: "Enter a Wait Time: 0 mins"
-			font_size: 30
-			color: 1, 1, 1, 1
+        Label:
+            id: slider_label
+            text: "Enter a Wait Time: 0 mins"
+            font_size: 30
+            color: 1, 1, 1, 1
 
-		Slider:
-			id: waittime
-			value_track: True
-			value_track_color: [.2, .6, 1, 1]
-			min: 1
-			max: 120
-			step: 1
-			orientation: "horizontal"
-			on_value: root.slide_it(*args)
+        Slider:
+            id: waittime
+            value_track: True
+            value_track_color: [.2, .6, 1, 1]
+            min: 1
+            max: 120
+            step: 1
+            orientation: "horizontal"
+            on_value: root.slide_it(*args)
 
-		Button:
-			text: "Submit!"
-			pos_hint:{"center_x":.5,"center_y":.5}
-			on_press: app.pressed(self)
-			background_color: .2, .6, 1, .8
+        Button:
+            text: "Submit!"
+            pos_hint:{"center_x":.5,"center_y":.5}
+            on_press: root.submit_pressed(self)
+            background_color: .2, .6, 1, .8
 
-
-	BoxLayout:
-	    size_hint_y: 1.75
-	    orientation: "vertical"
-		Label:
-		    text: "The current wait is: [color=#ADD8E6][u]7[/u][/color] Minutes!"
-		    font_size: 50
-		    markup: True
-		    background_color: 1, 1, 1, 1
+    BoxLayout:
+        size_hint_y: 1.75
+        orientation: "vertical"
+        Label:
+            id: wait_time_label
+            text: "The current wait is: [color=#ADD8E6][u]0[/u][/color] Minutes!"
+            font_size: 50
+            markup: True
+            background_color: 1, 1, 1, 1
